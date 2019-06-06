@@ -3,12 +3,10 @@ package com.elymberopoulos.REST_MySQL.dao;
 import com.elymberopoulos.REST_MySQL.businessModels.Customer;
 import com.elymberopoulos.REST_MySQL.dbConnection.Connect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CustomerDAO {
 
@@ -18,17 +16,18 @@ public class CustomerDAO {
         this.connector = new Connect();
     }
 
-    @Autowired
-    public synchronized List<Customer> getAllCustomers(){
-        Connection conn = connector.getConnection();
+    public synchronized List<Customer> GetAllCustomers() throws SQLException {
+        Connection conn = connector.GetConnection();
         Statement stmt = null;
         ResultSet rs = null;
         List<Customer> result = new ArrayList<Customer>();
-        String query = "SELECT * FROM sql_store.customers;";
 
         try {
+
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery("SELECT * " +
+                                        "FROM sql_store.customers;");
+
             while(rs.next()) {
                 Customer customer = new Customer();
                 customer.setCustomerID(rs.getInt("customer_id"));
@@ -45,10 +44,53 @@ public class CustomerDAO {
             }
 
             return result;
-        }
 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if(conn != null){
+                conn.close();
+            }
+            if(rs != null){
+                rs.close();
+            }
+        }
+        return null;
+    }
+
+    public synchronized Customer GetByID(int id) throws SQLException {
+        Connection conn = connector.GetConnection();
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try{
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM customers WHERE customer_id = '" + id + "';");
+
+            while (rs.next()){
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt("customer_id"));
+                customer.setFirstName(rs.getString("first_name"));
+                customer.setLastName(rs.getString("last_name"));
+                customer.setBirthDate(rs.getDate("birth_date"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setAddress(rs.getString("address"));
+                customer.setCity(rs.getString("city"));
+                customer.setState(rs.getString("state"));
+                customer.setPoints(rs.getInt("points"));
+
+                return customer;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(conn != null){
+                conn.close();
+            }
+            if(rs != null){
+                rs.close();
+            }
         }
         return null;
     }

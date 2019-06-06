@@ -15,7 +15,7 @@ public class Connect {
         this.dbCredentials = new Credentials();
     }
 
-    public Connection getConnection() {
+    public Connection GetConnection() {
         Connection conn = null;
 
         try {
