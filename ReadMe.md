@@ -2,6 +2,8 @@
 
 This project is for learning purposes.
 
+This is a Spring Rest API that is using a MySQL database that is hosted on AWS.
+
 This is a Gradle project. In order to build the .jar file run **"gradle build"** in the terminal if you have Gradle added to your ENV variables.
 The project can then be run by typing the following command into the terminal **"java -jar build/libs/REST_MySQL-0.0.1-SNAPSHOT.jar"**.
 
