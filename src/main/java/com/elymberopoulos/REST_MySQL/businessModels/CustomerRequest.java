@@ -1,23 +1,21 @@
 package com.elymberopoulos.REST_MySQL.businessModels;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Customer {
-    //    @Id
-//    @GeneratedValue(strategy= GenerationType.AUTO)
+public class CustomerRequest {
+
     private int customerID;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private String birthDate;
     private String phone;
     private String address;
     private String city;
     private String state;
     private int points;
 
-    public Customer() {}
+    public CustomerRequest() {
+    }
 
     public int getCustomerID() {
         return customerID;
@@ -43,18 +41,13 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
-
-//    public void setBirthDate(String birthDate) throws ParseException {
-//        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-//        this.birthDate = format.parse(birthDate);
-//    }
 
     public String getPhone() {
         return phone;
